@@ -44,7 +44,7 @@ export class PokemonService {
 
     const query = this.pokemonModel
       .find()
-      .limit(this.defaultLimit)
+      .limit(limit)
       .skip(offset)
       .select('-__v'); //.sort({ no: 1 }); ordenar de manera ascendente, y quitamos el campo __v
 

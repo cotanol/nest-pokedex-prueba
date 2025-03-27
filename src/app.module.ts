@@ -7,6 +7,7 @@ import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
 import { ConfigModule } from '@nestjs/config';
 import { EnvConfiguration } from './config/env.config';
+import { joiValidationSchema } from './config/joi.validation';
 
 @Module({
   imports: [
@@ -14,15 +15,16 @@ import { EnvConfiguration } from './config/env.config';
       isGlobal: true,
       envFilePath: '.env',
       load: [EnvConfiguration],
+      validationSchema: joiValidationSchema,
     }),
 
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
 
-    MongooseModule.forRoot(
-      process.env.MONGODB || 'No haz levantado el servicio de MongoDB',
-    ),
+    MongooseModule.forRoot(process.env.MONGODB!, {
+      dbName: 'pokemonsdb',
+    }),
 
     PokemonModule,
 
